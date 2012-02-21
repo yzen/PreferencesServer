@@ -26,9 +26,6 @@
                 type: "gpii.source",
                 options: {
                     writable: true,
-                    termMap: {
-                        id: "%id"
-                    },
                     path: "/user/:id?"
                 }
             }
