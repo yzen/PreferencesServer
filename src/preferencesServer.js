@@ -5,7 +5,8 @@
     var express = require("express"),
         fluid = require("infusion"),
         gpii = fluid.registerNamespace("gpii");
-        fluid.require("../../../../../dataSource.js");
+
+    fluid.require("../../../../../src/dataSource.js");
         
     process.on("uncaughtException", function (err) {
         console.log("Uncaught Exception: " + err);
