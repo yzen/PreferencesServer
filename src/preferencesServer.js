@@ -6,7 +6,7 @@
         fluid = require("infusion"),
         gpii = fluid.registerNamespace("gpii");
 
-    fluid.require("../../../../../src/dataSource.js");
+    fluid.require("../../../../../src/source.js");
         
     process.on("uncaughtException", function (err) {
         console.log("Uncaught Exception: " + err);
@@ -22,12 +22,11 @@
         preInitFunction: "gpii.preferencesServer.preInit",
         finalInitFunction: "gpii.preferencesServer.finalInit",
         components: {
-            userDataSource: {
-                type: "gpii.dataSource",
+            userSource: {
+                type: "gpii.source",
                 options: {
-                    termMap: {
-                        token: "%token"
-                    }
+                    writable: true,
+                    path: "/user/:id?"
                 }
             }
         }
@@ -55,36 +54,20 @@
     };
     
     gpii.preferencesServer.finalInit = function (that) {
-        that.server.all("/user/:id", function (req, res, next) {
-            // params available: id
-            req.id = req.params.id;
-            next();
-        });
-    
-        that.server.get("/user/:id", function (req, res) {
-            that.userDataSource.get({
-                token: req.id
-            }, function (resp) {
-                res.send(resp, 200);
-            }, function (message, error) {
-                console.log(message);
-            });
-        });
-    
         that.server.listen(8080);
     };
     
-    fluid.demands("userDataSource", "gpii.development", {
+    fluid.demands("gpii.dataSource", ["gpii.development", "userSource"], {
         options: {
-            url: "%db/test/data/user/%token.json"
+            url: "%db/test/data/user/%id.json"
         }
     });
     
-    fluid.demands("userDataSource", "gpii.production", {
+    fluid.demands("gpii.dataSource", ["gpii.production", "userSource"], {
         options: {
             host: "0.0.0.0",
             port: 5984,
-            url: "%db/user/%token"
+            url: "%db/user/%id"
         }
     });
     
