@@ -6,6 +6,14 @@
         fluid = require("infusion"),
         gpii = fluid.registerNamespace("gpii");
 
+    var findArgv = function (key) {
+        return fluid.find(process.argv, function (arg) {
+            if (arg.indexOf(key + "=") === 0) {
+                return arg.substr(key.length + 1);
+            }
+        });
+    };
+
     fluid.require("../../../../../src/source.js");
         
     process.on("uncaughtException", function (err) {
@@ -26,7 +34,8 @@
                 type: "gpii.source",
                 options: {
                     writable: true,
-                    path: "/user/:id?"
+                    generator: "token",
+                    path: "/user/:token?"
                 }
             }
         }
@@ -54,12 +63,14 @@
     };
     
     gpii.preferencesServer.finalInit = function (that) {
-        that.server.listen(8080);
+        var port = findArgv("port") || 8080;
+        console.log("Preferences Server is running on port: " + port);
+        that.server.listen(typeof port === "string" ? parseInt(port, 10) : port);
     };
     
     fluid.demands("gpii.dataSource", ["gpii.development", "userSource"], {
         options: {
-            url: "%db/test/data/user/%id.json"
+            url: "%db/test/data/user/%token.json"
         }
     });
     
@@ -67,7 +78,7 @@
         options: {
             host: "0.0.0.0",
             port: 5984,
-            url: "%db/user/%id"
+            url: "%db/user/%token"
         }
     });
     

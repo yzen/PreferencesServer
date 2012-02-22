@@ -16,3 +16,11 @@ Calls to preferences server are made with user credentials.
 
     git clone git://github.com/fluid-project/infusion.git
     npm install path/to/your/local/infusion/clone
+
+### Run
+
+To run preferences server simply type:
+
+    node src/preferencesServer.js [port=PORTNUMBER]
+
+- You can specify an optional port number to run your preferences server on.
