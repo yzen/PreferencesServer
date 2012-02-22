@@ -14,7 +14,7 @@
         });
     };
 
-    fluid.require("../../../../../src/source.js");
+    fluid.require("../../../../../shared/source.js");
         
     process.on("uncaughtException", function (err) {
         console.log("Uncaught Exception: " + err);
