@@ -8,14 +8,12 @@ Calls to preferences server are made with user credentials.
 
 ### Dependencies
 
-- [express](http://expressjs.com/) framework. You can install it using npm:
+[express](http://expressjs.com/) framework.
+[infusion](https://github.com/fluid-project/infusion) framework.
+These dependencies are linked to Preferences Server as git submodules so all you need to do is to run:
 
-    npm install express
-
-- [infusion](https://github.com/fluid-project/infusion) framework. You can install it using git and npm:
-
-    git clone git://github.com/fluid-project/infusion.git
-    npm install path/to/your/local/infusion/clone
+    git submodule init
+    git submodule update
 
 ### Run
 
