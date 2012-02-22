@@ -81,6 +81,12 @@
             url: "%db/user/%token"
         }
     });
+
+    fluid.demands("gpii.source", "gpii.preferencesServer", {
+        options: {
+            server: "{gpii.preferencesServer}.server"
+        }
+    });
     
     gpii.preferencesServer();
     
